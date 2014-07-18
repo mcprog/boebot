@@ -1,0 +1,60 @@
+' {$STAMP BS2}
+' {$PBASIC 2.5}
+
+' Created by Michael Curtis
+
+' Notes (6th octave)
+c6    CON   1047
+cs6   CON   1109
+d6    CON   1175
+ds6   CON   1245
+e6    CON   1319
+f6    CON   1367
+fs6   CON   1480
+g6    CON   1568
+gs6   CON   1622
+a6    CON   1760
+as6   CON   1864
+bee6  CON   1976     'b6 reserved key
+
+' Notes (7th octave)
+c7    CON   2093
+cs7   CON   2217
+d7    CON   2349
+ds7   CON   2489
+e7    CON   2637
+f7    CON   2793
+fs7   CON   2960
+g7    CON   3136
+gs7   CON   3322
+a7    CON   3520
+as7   CON   3729
+bee7  CON   3951     'b7 reserved key
+
+' Timing
+crotchet    CON   500
+half        CON   crotchet * 2
+quaver      CON   crotchet / 2
+
+sPin  CON   14
+
+DO
+  SELECT INL
+    CASE %01111111
+      FREQOUT sPin, quaver, a6
+    CASE %10111111
+      FREQOUT sPin, quaver, bee6
+    CASE %11011111
+      FREQOUT sPin, quaver, c7
+    CASE %11101111
+      FREQOUT sPin, quaver, d7
+    CASE %11110111
+      FREQOUT sPin, quaver, e7
+    CASE %11111011
+      FREQOUT sPin, quaver, f7
+    CASE %11111101
+      FREQOUT sPin, quaver, g7
+    CASE %11111110
+      FREQOUT sPin, quaver, a7
+  ENDSELECT
+LOOP
