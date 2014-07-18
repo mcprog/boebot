@@ -1,0 +1,134 @@
+' {$STAMP BS2}
+' {$PBASIC 2.5}
+' Created by: Ian Eusebio
+
+state VAR Word
+time VAR Word
+switch VAR Bit
+
+DO
+ SELECT INL ' Select line follower states
+
+ CASE %10000000, %11000000 ' Pivot right
+ GOSUB Check
+ PULSOUT 13, 650
+ PULSOUT 12, 650
+
+ CASE %01000000, %01100000, %01110000 ' Curve right
+ GOSUB Check
+ PULSOUT 13, 700
+ PULSOUT 12, 650
+
+ CASE %00100000, %00110000 ' Slight right
+ GOSUB Check
+ PULSOUT 13, 750
+ PULSOUT 12, 650
+
+ CASE %00111000, %00010000 ' Adjust right
+ GOSUB Check
+ PULSOUT 13, 800
+ PULSOUT 12, 650
+
+ CASE %00011000 ' Straight
+ GOSUB Check
+ PULSOUT 13, 850
+ PULSOUT 12, 650
+
+ CASE %00011100, %00000100 ' Adjust left
+ GOSUB Check
+ PULSOUT 13, 850
+ PULSOUT 12, 700
+
+ CASE %00001000, %00001100 ' Slight left
+ GOSUB Check
+ PULSOUT 13, 850
+ PULSOUT 12, 750
+
+ CASE %00000010, %00000110, %00001110 ' Curve left
+ GOSUB Check
+ PULSOUT 13, 850
+ PULSOUT 12, 800
+
+ CASE %00000001, %00000011 ' Pivot left
+ GOSUB Check
+ PULSOUT 13, 850
+ PULSOUT 12, 850
+
+ CASE %11111000  ' Signal Right turn
+  GOSUB Check
+  GOSUB Right
+  switch = 0
+  PAUSE 100
+
+ CASE %00011111  ' Signal Left turn
+  GOSUB Check
+  GOSUB Left
+  PAUSE 100
+
+ CASE %11111111  ' 90 deg on line
+  GOSUB Check
+  PAUSE 100
+  GOSUB Flip
+
+ CASE %00000000  ' Open Space
+  GOSUB Check
+  GOSUB Forward
+
+ ENDSELECT
+LOOP
+
+'Sub Rutines
+Forward:
+  GOSUB Check
+  PULSOUT 13, 825
+  PULSOUT 12, 675
+  PAUSE 20
+  RETURN
+
+Backward:
+  FOR time = 1 TO 100
+    PULSOUT 12, 850
+    PULSOUT 13, 650
+    GOSUB Check
+  NEXT
+  PAUSE 20
+  RETURN
+
+Right:
+  FOR time = 1 TO 155
+    PULSOUT 12, 770
+    PULSOUT 13, 850
+    GOSUB Check
+  NEXT
+  PAUSE 20
+  RETURN
+
+Left:
+  FOR time = 1 TO 155
+    PULSOUT 12, 650
+    PULSOUT 13, 730
+    GOSUB Check
+  NEXT
+  PAUSE 20
+  RETURN
+
+Flip:                          'Flip flop for turning
+  IF switch = 1 THEN
+    switch = 0
+  ELSEIF switch = 0 THEN
+    switch = 1
+  ENDIF
+  IF switch = 1 THEN
+    GOSUB Left
+    PAUSE 50
+  ELSE
+    GOSUB Right
+    PAUSE 50
+  ENDIF
+  RETURN
+
+Check:                         'Safety System from wiskers
+  IF IN8 = 0 | IN9 = 0 THEN
+    PAUSE 10000
+    ENDIF
+  RETURN
