@@ -10,87 +10,105 @@ leftPwr CON 850 'pin 13
 rightPwr CON 650 'pin 12
 
 'Command
+
 DO
-  SELECT INL                                             ' Select line follower states
-    CASE %1000000, %11000000, %11100000                  ' Pivot right
-
-      GOSUB PivotRight
-    CASE %01100000, %01110000                            ' Curve right
-
-      PULSOUT 13, 700
-      PULSOUT 12, rightPwr
-    CASE %00100000, %00110000                            ' Slight right
-
-      PULSOUT 13, 750
-      PULSOUT 12, rightPwr
-    CASE %00111000                                       ' Adjust right
-
-      PULSOUT 13, 800
-      PULSOUT 12, rightPwr
-    CASE %00011000, %00001000, %00010000                 ' Straight
-
-      GOSUB Straight
-    CASE %00011100                                       ' Adjust left
-
-      PULSOUT 13, leftPwr
-      PULSOUT 12, 700
-    CASE %00000100, %00001100                            ' Slight left
-
-      PULSOUT 13, leftPwr
-      PULSOUT 12, 750
-    CASE %00000110, %00001110                            ' Curve left
-
-      PULSOUT 13, leftPwr
-      PULSOUT 12, 800
-    CASE %00000001, %00000011, %00000111                 ' Pivot left
-
-      GOSUB PivotLeft
-    CASE %11110000, %11111000, %11111100, %11111110      ' Jump Line
-
-      GOSUB Left90
-      PAUSE 150
-      GOSUB Forward
-      PAUSE 150
-      GOSUB Right90
-    CASE %00001111, %00011111, %00111111, %01111111
-
-      GOSUB Right90
-      PAUSE 150
-      GOSUB Forward
-      PAUSE 150
-      GOSUB Left90
-  ENDSELECT
+  IF IN10 = 0 & IN12 = 0 THEN
+    GOSUB FollowLine
+  ELSEIF IN10 = 0 & IN10 = 1 THEN
+    GOSUB FollowLine
+  ELSEIF IN10 = 1 & IN12 = 0 THEN
+    GOSUB FollowLine
+  ELSE
+    PAUSE 2000
+  ENDIF
 LOOP
 
 'Sub-Routines
 
+FollowLine:
+  SELECT INL                                             ' Select line follower states
+      CASE %1000000, %11000000, %11100000                  ' Pivot right
+        GOSUB PivotRight
+      CASE %01100000, %01110000                            ' Curve right
+        PULSOUT 13, 700
+        PULSOUT 12, rightPwr
+      CASE %00100000, %00110000                            ' Slight right
+        PULSOUT 13, 750
+        PULSOUT 12, rightPwr
+      CASE %00111000                                       ' Adjust right
+        PULSOUT 13, 800
+        PULSOUT 12, rightPwr
+      CASE %00011000, %00001000, %00010000                 ' Straight
+        GOSUB Straight
+      CASE %00011100                                       ' Adjust left
+        PULSOUT 13, leftPwr
+        PULSOUT 12, 700
+      CASE %00000100, %00001100                            ' Slight left
+        PULSOUT 13, leftPwr
+        PULSOUT 12, 750
+      CASE %00000110, %00001110                            ' Curve left
+        PULSOUT 13, leftPwr
+        PULSOUT 12, 800
+      CASE %00000001, %00000011, %00000111                 ' Pivot left
+        GOSUB PivotLeft
+      CASE %11110000, %11111000, %11111100, %11111110      ' Jump Line
+        IF IN10 = 0 & IN12 = 0 THEN
+          GOSUB JumpLeft
+        ELSE
+          PAUSE 2000
+        ENDIF
+      CASE %00001111, %00011111, %00111111, %01111111
+        IF IN10 = 0 & IN12 = 0 THEN
+        GOSUB Right90
+        PAUSE 150
+        GOSUB Forward
+        PAUSE 150
+        GOSUB Left90
+        ELSE
+          PAUSE 2000
+        ENDIF
+    ENDSELECT
+
+    RETURN
+
 SafeMove:
-  IF IN10 = 0 | IN12 = 0 THEN
-    FREQOUT 14, 1000, 1200
+  IF IN10 = 0 & IN12 = 0 THEN
     PAUSE 2000
   ENDIF
   RETURN
 
-Left90:
-  FOR i = 1 TO 100
-    PULSOUT 13, 800
-    PULSOUT 12, 800
-  NEXT
+JumpLeft:
+  GOSUB Left90
+  PAUSE 150
+  GOSUB Forward
+  PAUSE 150
+  GOSUB Right90
+  RETURN
 
+JumpRight:
+
+Left90:
+  FOR i = 1 TO 200
+    PULSOUT 13, 770
+    PULSOUT 12, 770
+  NEXT
+  PAUSE 20
   RETURN
 
 Right90:
-  FOR i = 1 TO 100
-    PULSOUT 13, 700
-    PULSOUT 12, 700
+  FOR i = 1 TO 200
+    PULSOUT 13, 725
+    PULSOUT 12, 725
   NEXT
+  PAUSE 20
   RETURN
 
 Forward:
-   FOR i = 1 TO 175
-    PULSOUT 13, 850
-    PULSOUT 12, 650
+  FOR i = 1 TO 100
+    PULSOUT 13, 770
+    PULSOUT 12, 730
   NEXT
+  PAUSE 20
   RETURN
 
 Straight:
@@ -117,12 +135,3 @@ CurveRight:
   PULSOUT 13, 700
   PULSOUT 12, 650
   RETURN
-
-SlightLeft:
-
-SlightRight:
-
-AdjustLeft:
-
-AdjustRight:
-
