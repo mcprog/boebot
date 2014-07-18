@@ -55,6 +55,74 @@ FREQOUT 14, half, d7
 
 GOSUB TripletHighStart
 
+GOSUB SecondMovement
+
+PAUSE crotchet
+PAUSE 50
+
+FREQOUT 14, crotchet + quaver, d6
+PAUSE 50
+FREQOUT 14, crotchet, d6
+PAUSE 50
+FREQOUT 14, half, g6
+PAUSE 50
+FREQOUT 14, half, d7
+PAUSE 50
+
+GOSUB TripletHighStart
+
+FREQOUT 14, half, g6
+PAUSE 50
+FREQOUT 14, half, d7
+PAUSE 50
+
+FREQOUT 14, crotchet / 3, c7
+PAUSE 50
+FREQOUT 14, crotchet / 3, bee7
+PAUSE 50
+FREQOUT 14, crotchet / 3, a7
+PAUSE 50
+FREQOUT 14, crotchet, g7
+PAUSE 50
+FREQOUT 14, crotchet, d7
+PAUSE 50
+
+FREQOUT 14, crotchet / 3, c7
+PAUSE 50
+FREQOUT 14, crotchet / 3, bee7
+PAUSE 50
+FREQOUT 14, crotchet / 3, a7
+PAUSE 50
+FREQOUT 14, crotchet, g7
+PAUSE 50
+FREQOUT 14, crotchet, d7
+PAUSE 50
+
+FREQOUT 14, crotchet / 3, c7
+PAUSE 50
+FREQOUT 14, crotchet / 3, bee7
+PAUSE 50
+FREQOUT 14, crotchet / 3, c7
+PAUSE 50
+FREQOUT 14, half, a7
+
+FREQOUT 14, crotchet / 3, a7
+PAUSE 50
+FREQOUT 14, crotchet / 3, g6
+PAUSE 50
+FREQOUT 14, crotchet / 3, f6
+PAUSE 50
+FREQOUT 14, crotchet, g6
+PAUSE 50
+FREQOUT 14, crotchet / 3, g6
+PAUSE 50
+FREQOUT 14, crotchet / 3, g6
+PAUSE 50
+FREQOUT 14, crotchet / 3, g6
+PAUSE 50
+FREQOUT 14, crotchet, g6
+PAUSE 50
+
 END
 
 'Sub-Routines
@@ -92,6 +160,99 @@ TripletHighStart:
   FREQOUT 14, quaver + (quaver / 2), d6
   PAUSE 50
   FREQOUT 14, quaver / 2, d6
+  PAUSE 50
+
+  RETURN
+
+SecondMovement:
+  FREQOUT 14, half, e6
+  PAUSE 50
+  FREQOUT 14, crotchet, c7
+  PAUSE 50
+  FREQOUT 14, quaver, bee7
+  PAUSE 50
+  FREQOUT 14, quaver, a7
+  PAUSE 50
+  FREQOUT 14, crotchet / 3, g6
+  PAUSE 50
+  FREQOUT 14, crotchet / 3, a7
+  PAUSE 50
+  FREQOUT 14, crotchet / 3, bee7
+  PAUSE 50
+  FREQOUT 14, quaver + (quaver / 2), a7
+  PAUSE 50
+  FREQOUT 14, quaver / 2, e6
+  PAUSE 50
+  FREQOUT 14, crotchet, f6
+  PAUSE 50
+  FREQOUT 14, quaver + (quaver / 2), d6
+  PAUSE 50
+  FREQOUT 14, quaver / 2, d6
+  PAUSE 50
+  FREQOUT 14, half, e6
+  PAUSE 50
+  FREQOUT 14, crotchet, c7
+  PAUSE 50
+  FREQOUT 14, crotchet / 3, bee7
+  PAUSE 50
+  FREQOUT 14, crotchet / 3, a7
+  PAUSE 50
+  FREQOUT 14, crotchet / 3, g6
+  PAUSE 50
+  FREQOUT 14, crotchet, d7
+  PAUSE 50
+  FREQOUT 14, crotchet, a7
+  PAUSE 50
+  PAUSE crotchet
+  PAUSE 50
+
+  FREQOUT 14, quaver + (quaver / 2), d6
+  PAUSE 50
+  FREQOUT 14, quaver / 2, d6
+  PAUSE 50
+  FREQOUT 14, half, e6
+  PAUSE 50
+  FREQOUT 14, crotchet, c7
+  PAUSE 50
+  FREQOUT 14, quaver, bee7
+  PAUSE 50
+  FREQOUT 14, quaver, a7
+  PAUSE 50
+  FREQOUT 14, crotchet / 3, g6
+  PAUSE 50
+  FREQOUT 14, crotchet / 3, a7
+  PAUSE 50
+  FREQOUT 14, crotchet / 3, bee7
+  PAUSE 50
+  FREQOUT 14, quaver + (quaver / 2), a7
+  PAUSE 50
+  FREQOUT 14, quaver / 2, e6
+  PAUSE 50
+  FREQOUT 14, crotchet, f6
+  PAUSE 50
+  FREQOUT 14, quaver + (quaver / 2), d7
+  PAUSE 50
+  FREQOUT 14, quaver / 2, d7
+  PAUSE 50
+
+  FREQOUT 14, quaver + (quaver / 2), g7
+  PAUSE 50
+  FREQOUT 14, quaver / 2, fs7
+  PAUSE 50
+  FREQOUT 14, quaver + (quaver / 2), ds7
+  PAUSE 50
+  FREQOUT 14, quaver / 2, d7
+  PAUSE 50
+  FREQOUT 14, quaver + (quaver / 2), c7
+  PAUSE 50
+  FREQOUT 14, quaver / 2, as7
+  PAUSE 50
+  FREQOUT 14, quaver + (quaver / 2), a7
+  PAUSE 50
+  FREQOUT 14, quaver / 2, g7
+  PAUSE 50
+
+  FREQOUT 14, half, d7
   PAUSE 50
 
   RETURN
