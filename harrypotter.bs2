@@ -30,7 +30,7 @@ as7   CON   3729
 bee7  CON   3951     'b7 reserved key
 
 ' Timing
-crotchet    CON   250
+crotchet    CON   1000
 half        CON   crotchet * 2
 quaver      CON   crotchet / 2
 whole       CON   crotchet * 4
